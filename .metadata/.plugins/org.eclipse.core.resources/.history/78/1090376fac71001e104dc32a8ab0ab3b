@@ -1,0 +1,137 @@
+package gui;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+public class EJEMPLO2 extends JFrame implements ActionListener{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField txtCantidad;
+	private JComboBox <String> cboCodigo;
+	private JButton btnProcesar;
+	private JScrollPane scrollPane;
+	private JTextArea txtS;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					EJEMPLO2 frame = new EJEMPLO2();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public EJEMPLO2() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		cboCodigo = new JComboBox<String>();
+		cboCodigo.setModel(new DefaultComboBoxModel<String>(new String[] {"101", "102", "103"}));
+		cboCodigo.setBounds(10, 11, 86, 22);
+		contentPane.add(cboCodigo);
+		
+		txtCantidad = new JTextField();
+		txtCantidad.setBounds(10, 44, 86, 20);
+		contentPane.add(txtCantidad);
+		txtCantidad.setColumns(10);
+		
+		btnProcesar = new JButton("Procesar");
+		btnProcesar.addActionListener(this);
+		btnProcesar.setBounds(335, 26, 89, 23);
+		contentPane.add(btnProcesar);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 75, 414, 175);
+		contentPane.add(scrollPane);
+		
+		txtS = new JTextArea();
+		scrollPane.setViewportView(txtS);
+	}
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource()==btnProcesar) {
+			actionPerformedBtnProcesar(arg0);
+		}
+	}
+	double pre,impC,impD,impP;
+	int cant,cod,cantCara;
+	
+	protected void actionPerformedBtnProcesar(ActionEvent arg0) {
+		leerdatos();
+		precios();
+		importeCompra();
+		importeDescuento();
+		ImportePagar();
+		regalos();
+		mostrar();
+		
+	}
+	void leerdatos() {
+		cant=Integer.parseInt(txtCantidad.getText());
+		cod=cboCodigo.getSelectedIndex();
+	}
+	void precios() {
+		if 		(cod==0) {pre=17.5;}
+		else if (cod==1) {pre=25.0;}
+		else			 {pre=15.0;}
+	}
+	void importeCompra() {
+		impC=pre*cant;
+	}
+	void importeDescuento() {
+		if 		(cant<11) {impD=impC* 0.05;}
+		else if (cant>=11 && cant <21) {impD=impC*0.075;}
+		else if (cant>=21 && cant <31) {impD=impC*0.1;}
+		else 						   {impD=impC*0.125;}
+	}
+	void ImportePagar() {
+		impP=impC-impD;
+	}
+	void regalos() {
+		if		(impP> 250) {cantCara=3*cant;}
+		else if (impP<=250) {cantCara=2*cant;}
+	}
+	void mostrar() {
+		imprimir("Importe Compra    :" + decimalFormat(impC));
+		imprimir("Importe Descuento :" + decimalFormat(impD));
+		imprimir("Importe Pagar     :" + decimalFormat(impP));
+		imprimir("Regalo : " + cantCara + "caramelos");
+	}
+	
+	
+	public String decimalFormat(double p) {
+		return String.format("%.2f",p);
+	}
+	public void imprimir(String s) {
+		txtS.append(s + "\n");
+	}
+}

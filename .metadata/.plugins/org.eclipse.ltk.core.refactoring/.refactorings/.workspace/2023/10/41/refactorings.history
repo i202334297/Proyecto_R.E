@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;EJERCICIOS_CONDICIONALES (if-else if-else-switch)&apos;" deleteContents="true" description="Delete resource &apos;EJERCICIOS_CONDICIONALES (if-else if-else-switch)&apos;" element1="/EJERCICIOS_CONDICIONALES (if-else if-else-switch)" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1696950384266"/>
+</session>

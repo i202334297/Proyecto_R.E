@@ -1,0 +1,127 @@
+package gui;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class EJEMPLO1 extends JFrame implements ActionListener{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField txtCantidad;
+	private JTextField txtPrecio;
+	private JScrollPane scrollPane;
+	private JTextArea txtS;
+	private JButton btnProcesar;
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					EJEMPLO1 frame = new EJEMPLO1();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public EJEMPLO1() {
+		setTitle("TIENDA");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 369);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 88, 414, 231);
+		contentPane.add(scrollPane);
+		
+		txtS = new JTextArea();
+		scrollPane.setViewportView(txtS);
+		
+		txtCantidad = new JTextField();
+		txtCantidad.setBounds(10, 27, 86, 20);
+		contentPane.add(txtCantidad);
+		txtCantidad.setColumns(10);
+		
+		txtPrecio = new JTextField();
+		txtPrecio.setBounds(130, 27, 86, 20);
+		contentPane.add(txtPrecio);
+		txtPrecio.setColumns(10);
+		
+		btnProcesar = new JButton("Procesar");
+		btnProcesar.addActionListener(this);
+		btnProcesar.setBounds(335, 26, 89, 23);
+		contentPane.add(btnProcesar);
+	}
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource()==btnProcesar) {
+			actioPerformedBtnProcesar(arg0);
+		}
+	}
+	int cant;
+	double pre,impC,impD,impP;
+	String obs;
+	
+	public void actioPerformedBtnProcesar(ActionEvent arg0) {
+		leerDatos();
+		ImporteCompra();
+		Descuentos();
+		ImportePagar();
+		Obsequio();
+		mostrar();
+	}
+	void leerDatos() {
+		cant=Integer.parseInt(txtCantidad.getText());
+		pre=Double.parseDouble(txtPrecio.getText());
+	}
+	void ImporteCompra() {
+		impC=pre*cant;
+	}
+	void Descuentos() {
+		if (cant > 10) {impD=impC*0.15;}
+		else {impD=impC*0.05;}
+	}
+	void ImportePagar() {
+		impP=impC-impD;
+	}
+	void Obsequio() {
+		if (impP>200) {obs="Agenda";}
+		else		  {obs="Cuaderno";}
+	}
+	void mostrar() {
+		txtS.setText("Importe Compra    :  " + decimalFormat(impC)+"\n");
+		    imprimir("Importe Descuento :  " + decimalFormat(impD));
+		    imprimir("Importe Pagar     :  " + decimalFormat(impP));
+		    imprimir("EL Obsequio es    :  " + obs);
+	}
+
+	public String decimalFormat(double p) {
+		return String.format("%.2f",p);
+	}
+	public void imprimir (String s) {
+		txtS.append(s +"\n");
+	}	
+}

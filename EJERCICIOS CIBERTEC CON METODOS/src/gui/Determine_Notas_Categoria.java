@@ -1,0 +1,156 @@
+package gui;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+public class Determine_Notas_Categoria extends JFrame implements ActionListener{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField txtNotas;
+	private JScrollPane scrollPane;
+	private JTextArea txtS;
+	private JLabel lblIngreseNotas;
+	private JButton btnProcesar;
+	private JButton btnBorrar;
+	private JButton btnSalir;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Determine_Notas_Categoria frame = new Determine_Notas_Categoria();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Determine_Notas_Categoria() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 84, 414, 166);
+		contentPane.add(scrollPane);
+		
+		txtS = new JTextArea();
+		scrollPane.setViewportView(txtS);
+		
+		lblIngreseNotas = new JLabel("Ingrese Notas");
+		lblIngreseNotas.setBounds(10, 11, 86, 14);
+		contentPane.add(lblIngreseNotas);
+		
+		txtNotas = new JTextField();
+		txtNotas.setBounds(10, 36, 86, 20);
+		contentPane.add(txtNotas);
+		txtNotas.setColumns(10);
+		
+		btnProcesar = new JButton("Procesar");
+		btnProcesar.addActionListener(this);
+		btnProcesar.setBounds(265, 7, 89, 23);
+		contentPane.add(btnProcesar);
+		
+		btnBorrar = new JButton("Borrar");
+		btnBorrar.addActionListener(this);
+		btnBorrar.setBounds(265, 35, 89, 23);
+		contentPane.add(btnBorrar);
+		
+		btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(this);
+		btnSalir.setBounds(265, 60, 89, 23);
+		contentPane.add(btnSalir);
+	}
+	public void actionPerformed(ActionEvent arg0) {
+		if(arg0.getSource()== btnProcesar){
+			actionPerformedBtnProcesar(arg0);
+		}
+		if(arg0.getSource()==btnBorrar) {
+			actionPerformedBtnBorrar(arg0);
+		}
+		if(arg0.getSource()==btnSalir) {
+			actionPerformedBtnSalir(arg0);
+		}
+		
+	}
+	
+	int notas;
+	String cali;
+	
+	protected void actionPerformedBtnProcesar(ActionEvent arg0) {
+		leertxtnotas();
+		notas();
+		mostrar();
+		
+		
+		if(txtNotas.getText().length() == 0 ){
+			txtS.setText("INGRESE LA NOTA PRIMERO");
+			return;
+		}
+	
+	}
+	void leertxtnotas() {
+		notas=Integer.parseInt(txtNotas.getText());
+		
+		
+		
+	}
+	
+
+	
+	
+	void notas() {
+
+	
+		
+		if 		(notas>=17) {cali="A";}
+		else if (notas>=14 && notas<17) {cali="B";}
+		else if (notas>=12 && notas<14) {cali="C";}
+		else 							{cali="D";}
+		
+		
+	}
+	
+	void mostrar() {
+		txtS.setText(cali);
+		
+		
+	}
+
+	
+	protected void actionPerformedBtnBorrar(ActionEvent arg0) {
+		
+		
+	}
+
+
+	protected void actionPerformedBtnSalir(ActionEvent arg0) {
+		dispose();
+		
+	}
+}
